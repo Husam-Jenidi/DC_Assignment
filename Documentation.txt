@@ -47,6 +47,18 @@ at the end of the code, the function my_callback is defined, then an instance of
 and scheduled to occur after 5 seconds using the schedule method of the Simulation class. The simulation is then run and the events in the queue are printed
  using the print_events method of the EventQueue class.
 
+Q: the Run method in the Class Simulation
+A: This is the run method of the Simulation class. The method is used to run the simulation. The method takes one optional argument max_t,
+   which represents the maximum time that the simulation should run for. If max_t is not specified, it defaults to infinity (float('inf'))
+   which means that the simulation will run until the event queue is empty.
+   The method runs in a loop as long as the event queue is not empty. The loop starts by retrieving the next event in the queue using the
+   pop method of the EventQueue class. It then checks if the current simulation time self.t is greater than the maximum time max_t, if so
+   it breaks the loop.
+   It then updates the simulation time self.t to be the priority of the event that was just retrieved. The priority is the time that the
+   event should occur.
+   Finally, it calls the process method of the event. This method is implemented in the Event class and is used to process the event and
+   perform any necessary actions. The self argument is passed as a parameter which refers to the current instance of the Simulation class,
+   so the Event class can access the simulation state.
 
 Q: The output explain
 { INFO:root:5.00: Started Event 1
