@@ -1,2 +1,2 @@
 # DC_Assignment
-This is a repository of the Distributed Computing assignmnet about Discret Queueing System
+This is a repository of the Distributed Computing assignment about Discrete Queueing System
