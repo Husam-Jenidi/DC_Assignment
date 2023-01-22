@@ -1,52 +1,51 @@
+Q:  What does "__init__" method do?
+A:  The `__init__` method is used to set the initial state of an object when it is created from a class. It is used to define and
+    initialize the attributes of the class, and to set them to some initial value.
+    It's important to note that the `__init__` method is called automatically when an object is created from the class,
+    so no need to call it explicitly.
+
 Q: Abstract of the System
 A:  This is a simple event simulator that uses a priority queue (implemented using the heapq library) to manage events.
     The EventQueue class defines the priority queue and has methods for adding and removing events, as well as checking if
-    the queue is empty. The Simulation class represents the simulation state, with a simulated time (self.t) and an event queue
+    the queue is empty.
+    The Simulation class represents the simulation state, with a simulated time (self.t) and an event queue
     (self.events).
      The schedule method is used to schedule events to occur after a certain delay, and the run method runs the
     simulation by processing events from the queue until the queue is empty or the maximum simulated time (max_t) is reached.
     The Event class represents an event and has a process method that is called when the event is processed by the simulation.
     Subclasses of Event can be created to represent specific types of events, and can define their own initialization method
     and process method to customize their behavior.
-    Overall, this code is a great starting point for a simple event simulator,
-    but it's missing some important features like handling the event queue, it seems to be missing the EventQueue class, also
-    the callback function is not defined which is called inside the process method.
+    Overall, this code is implementation of a simple event simulator.
 
-Q: Brief explanation of each class and its functions in the code we worked on:
+Q: Explanation of each class and its functions in the code we worked on:
 A:
-    EventQueue: This class defines a basic priority queue that is used to hold the events scheduled by the simulation. It has
-     three functions:
+    This is a simulation code that uses classes and functions to model an event queue system. Since this code is written in python we will make use of the
+    libraries heapq and logging. The heapq library is used to implement the queueing system while the logging library is used to log events that occur during
+    the simulation.
 
-    push(event, priority): This function adds an event to the queue with a specified priority. The event is added to the queue
-     using the heapq.heappush function, which is a built-in python function that allows for efficient implementation of a priority queue.
-    pop(): This function removes the event with the highest priority from the queue and returns it. It uses the heapq.heappop
-     function to implement this.
-    is_empty(): This function returns True if the queue is empty and False otherwise.
+    The code consists of 4 classes:
 
-    Simulation: This class represents the state of the simulation, and it has several functions:
+ (EventQueue): This class is responsible for creating and managing the event queue. It has 4 methods which are:
+  "push" which is used to add events to the queue,
+  "pop" which is used to remove events from the queue,
+  "is_empty" which is used to check if the queue is empty
+  "print_events" which is used to print the events in the queue. I added this function for testing needs, it's not necessary
 
-        __init__(): This function initializes the simulation. It sets the simulated time to zero and creates an empty event queue.
-        schedule(delay, event): This function schedules an event to occur after a specified delay. It adds the event to the event
-        queue with a priority equal to the current simulated time plus the delay.
-        run(max_t=float('inf')): This function runs the simulation. It repeatedly takes the next event from the event queue
-        (the one with the highest priority) and processes it. It stops when the event queue is empty or when the simulated time
-        is greater than max_t.
-        log_info(msg): This function logs the message passed as an argument and the current simulated time.
+ (Simulation): This class is responsible for simulating the event queue system. It has 3 methods which are:
+ "schedule" which is used to schedule an event to occur after a certain delay,
+ "run" which is used to run the simulation,
+ "log_info" which is used to log messages with the level of "info" and the current simulated time.
 
-    Event: This is an abstract class that represents an event. It has three functions:
+ (Event): This class is responsible for representing the events in the simulation. It has 4 attributes that are {name, duration, callback and priority}.
+  And it has one method "process" which is used to process the event and schedule the end event.
 
-        __init__(name, duration, callback): This function initializes an event with a name, duration and a callback function.
-        process(sim1): This function processes the event. It logs that the event has started, schedules an EndEvent to occur
-        after the event's duration, and then calls the event's callback function.
-        priority: This variable holds the priority of the event, which is used to order the events in the event queue.
+ *optional *EndEvent: This class is responsible for representing the end event of each event. It has the same attributes as the Event class, but it has a different
+  process method which is used to log the end of the event.
 
-    EndEvent: This class is used to represent the end of an event. It has one function:
 
-        process(sim1): This function logs that the event has ended.
-
-    It's worth noting that the my_callback function is an example of a callback function that is passed to an event.
-    It is called when the event is processed, in this example it just print "Event finished" but it could have any other
-    functionality.
+at the end of the code, the function my_callback is defined, then an instance of the Simulation class is created and an instance of the Event class is created
+and scheduled to occur after 5 seconds using the schedule method of the Simulation class. The simulation is then run and the events in the queue are printed
+ using the print_events method of the EventQueue class.
 
 
 Q: The output explain
@@ -54,7 +53,7 @@ Q: The output explain
   INFO:root:10.00: Ended Event 1
   Event finished }
 A: The output shows that the event simulator is working as expected. The first line of the output, "Event finished", is printed by
-the my_callback function, which was passed as the callback for the event. This indicates that the callback was called when the
+the "my_callback function", which was passed as the callback for the event. This indicates that the callback was called when the
 event was processed.
 The next two lines of the output are log messages that were generated by the log_info function in the Simulation class.
 The first log message, "INFO:root:5.00: Started Event 1", indicates that the event named "Event 1" has started at time 5.00S.

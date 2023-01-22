@@ -7,7 +7,7 @@ logging.basicConfig(level=logging.INFO)
 
 
 class EventQueue:
-    def __init__(self):
+    def __init__(self):  # constructor method, initialize the attributes of the class when an object is created from it.
         self.queue = []
 
     def push(self, event, priority):  # add event function
@@ -66,7 +66,7 @@ class Event:
         self.name = name
         self.duration = duration
         self.callback = callback
-        self.priority = None
+        # self.priority = None
 
     def process(self, sim1):
         sim1.log_info(f'Started {self.name}')
