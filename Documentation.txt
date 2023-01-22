@@ -2,11 +2,13 @@ Q: Abstract of the System
 A:  This is a simple event simulator that uses a priority queue (implemented using the heapq library) to manage events.
     The EventQueue class defines the priority queue and has methods for adding and removing events, as well as checking if
     the queue is empty. The Simulation class represents the simulation state, with a simulated time (self.t) and an event queue
-    (self.events). The schedule method is used to schedule events to occur after a certain delay, and the run method runs the
+    (self.events).
+     The schedule method is used to schedule events to occur after a certain delay, and the run method runs the
     simulation by processing events from the queue until the queue is empty or the maximum simulated time (max_t) is reached.
     The Event class represents an event and has a process method that is called when the event is processed by the simulation.
     Subclasses of Event can be created to represent specific types of events, and can define their own initialization method
-    and process method to customize their behavior. Overall, this code is a great starting point for a simple event simulator,
+    and process method to customize their behavior.
+    Overall, this code is a great starting point for a simple event simulator,
     but it's missing some important features like handling the event queue, it seems to be missing the EventQueue class, also
     the callback function is not defined which is called inside the process method.
 

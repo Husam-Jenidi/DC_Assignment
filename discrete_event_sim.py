@@ -70,16 +70,17 @@ class Event:
 
     def process(self, sim1):
         sim1.log_info(f'Started {self.name}')
-        sim1.schedule(self.duration, EndEvent(self.name, self.callback))
+        # sim1.schedule(self.duration, EndEvent(self.name, self.callback))
         self.callback()
-
-
-class EndEvent(Event):
-    def __init__(self, name, callback):
-        super().__init__(name, 0, callback)
-
-    def process(self, sim1):
         sim1.log_info(f'Ended {self.name}')
+
+#
+# class EndEvent(Event):
+#     def __init__(self, name, callback):
+#         super().__init__(name, 0, callback)
+#
+#     def process(self, sim1):
+#         sim1.log_info(f'Ended {self.name}')
 
     # raise NotImplementedError, it didn't work
     # Example of how to use the simulation
