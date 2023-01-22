@@ -90,15 +90,15 @@ def my_callback():
 
 
 quu = EventQueue()
-quu.push("test", 1)
-quu.push("test", 2)
-quu.push("test", 3)
+quu.push("test1", 2)
+quu.push("test2", 3)
+quu.push("test3", 1)
 print(quu.is_empty())
 quu.print_events()
 quu.pop()
 quu.pop()
-quu.pop()
 print(quu.is_empty())
+quu.print_events()
 
 sim = Simulation()
 event1 = Event("Event 1", 5, my_callback)
