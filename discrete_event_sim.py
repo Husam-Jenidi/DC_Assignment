@@ -10,10 +10,10 @@ class EventQueue:
     def __init__(self):
         self.queue = []
 
-    def push(self, event, priority):
+    def push(self, event, priority):  # add event function
         heapq.heappush(self.queue, (priority, event))
 
-    def pop(self):
+    def pop(self):  # pull event function
         return heapq.heappop(self.queue)[1]
 
     def is_empty(self):
