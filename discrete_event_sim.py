@@ -19,6 +19,10 @@ class EventQueue:
     def is_empty(self):
         return len(self.queue) == 0
 
+    def print_events(self):
+        for event in self.queue:
+            print(event[1])  # event[1] is the event object, event[0] is the priority
+
 
 class Simulation:
     """Subclass this to represent the simulation state.
@@ -76,13 +80,25 @@ class EndEvent(Event):
 
     def process(self, sim1):
         sim1.log_info(f'Ended {self.name}')
-       # raise NotImplementedError, it didn't work
-       # Example of how to use the simulation
+
+    # raise NotImplementedError, it didn't work
+    # Example of how to use the simulation
 
 
 def my_callback():
     print("Event finished")
 
+
+quu = EventQueue()
+quu.push("test", 1)
+quu.push("test", 2)
+quu.push("test", 3)
+print(quu.is_empty())
+quu.print_events()
+quu.pop()
+quu.pop()
+quu.pop()
+print(quu.is_empty())
 
 sim = Simulation()
 event1 = Event("Event 1", 5, my_callback)
