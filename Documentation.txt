@@ -1,3 +1,6 @@
+
+            Discrete event simulation
+
 Q:  What does "__init__" method do?
 A:  The `__init__` method is used to set the initial state of an object when it is created from a class. It is used to define and
     initialize the attributes of the class, and to set them to some initial value.
@@ -76,3 +79,38 @@ The log message is printed by the log_info function in the Simulation class, whi
 (stored in the self.t variable) and the message passed as an argument, and formats them into a string that is passed to the
 logging.info function. The logging.info function is part of the logging module, which you configured at the beginning of the
 script with `logging.basicConfig(level=logging.
+
+
+        MMN_queue
+the explanation of the first class MMN(simulation)
+
+The previous class is for a single queue Multi-Server Multi-Queue (MMN) system.
+The class inherits from the Simulation class, which provides basic functionalities for running a discrete event simulation, such as
+ scheduling events and keeping track of the simulated time.
+The __init__ method initializes the state of the simulation. It takes three parameters: lambd which is the arrival rate of jobs, mu which
+ is the service rate of the servers, and n which is the number of servers in the system. The n parameter is not used in this implementation
+  as it is designed to only work for a single queue. If n is not equal to 1, it raises a NotImplementedError. The method also calls the
+   __init__ method of the Simulation class using super().__init__()
+
+The class has several instance variables:
+
+running: to keep track of the job that is currently being serviced, it's initial value is None.
+queue: is a FIFO queue for the system, implemented as a Python deque.
+arrivals: dictionary that maps job ids to their arrival times.
+completions: dictionary that maps job ids to their completion times.
+lambd: arrival rate of jobs
+mu: service rate of servers
+n: number of servers in the system
+arrival_rate: the arrival rate of the jobs divided by the number of servers
+completion_rate: the service rate of the servers divided by the number of servers
+The class has three methods:
+
+schedule_arrival(self, job_id): schedules the arrival of a new job following an exponential distribution, to compensate the number of
+ queues the arrival time should depend also on "n"
+schedule_completion(self, job_id): schedules the time of the completion event of a job following an exponential distribution, to compensate
+ the number of servers the completion time should depend also on "n"
+queue_len: is a property that returns the current number of jobs in the system, which is the length of the queue plus 1 if a job is
+currently being serviced.
+The class also schedules the first arrival event at time 0, with self.schedule(expovariate(lambd), Arrival(0))
+
+It's important to notice that the class is incomplete and some methods are missing their implementation and some variables are not being used.
