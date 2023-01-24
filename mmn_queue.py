@@ -16,7 +16,7 @@ from discrete_event_sim import Simulation, Event
 
 class MMN(Simulation):
 
-    def __init__(self, lambd, mu, n):
+    def __init__(self, lambd, mu, n):  # lambd is the overall arrival rate for the system,service rate,number of servers in the system
         if n != 1:
             raise NotImplementedError  # extend this to make it work for multiple queues
 
@@ -25,9 +25,9 @@ class MMN(Simulation):
         self.queue = collections.deque()  # FIFO queue of the system
         self.arrivals = {}  # dictionary mapping job id to arrival time
         self.completions = {}  # dictionary mapping job id to completion time
-        self.lambd = lambd
-        self.n = n
-        self.mu = mu
+        self.lambd = lambd  # the arrival rate
+        self.n = n  # number of servers in the system
+        self.mu = mu  # service rate of the servers
         self.arrival_rate = lambd / n
         self.completion_rate = mu / n
         self.schedule(expovariate(lambd), Arrival(0))
@@ -44,3 +44,66 @@ class MMN(Simulation):
     @property
     def queue_len(self):
         return (self.running is None) + len(self.queue)
+
+
+class Arrival(Event):
+
+    def __init__(self, job_id):
+        self.id = job_id
+
+    def process(self, sim: MMN):
+        # set the arrival time of the job
+        sim.arrivals[self.id] = sim.t
+        # if there is no running job, assign the incoming one and schedule its completion
+        if sim.running is None:
+            sim.running = self.id
+            sim.schedule_completion(self.id)
+        # otherwise put the job into the queue
+        else:
+            sim.queue.append(self.id)
+        # schedule the arrival of the next job
+        sim.schedule_arrival(self.id + 1)
+
+
+# manage the completion of the running job and schedule the next job from the queue, if any.
+class Completion(Event):
+    def __init__(self, job_id):
+        self.id = job_id  # currently unused, might be useful when extending
+
+    def process(self, sim: MMN):
+        assert sim.running is not None
+        sim.completions[sim.running] = sim.t  # set the completion time of the running job
+        # if the queue is not empty
+        if sim.queue:
+            next_job = sim.queue.popleft()  # get a job from the queue
+            sim.running = next_job
+            sim.schedule_completion(next_job)  # schedule its completion
+        else:
+            sim.running = None
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--lambd', type=float, default=0.7)
+    parser.add_argument('--mu', type=float, default=1)
+    parser.add_argument('--max-t', type=float, default=1_000_000)
+    parser.add_argument('--n', type=int, default=1)
+    parser.add_argument('--csv', help="CSV file in which to store results")
+    args = parser.parse_args()
+
+    sim = MMN(args.lambd, args.mu, args.n)
+    sim.run(args.max_t)
+
+    completions = sim.completions
+    W = (sum(completions.values()) - sum(sim.arrivals[job_id] for job_id in completions)) / len(completions)
+    print(f"Average time spent in the system: {W}")
+    print(f"Theoretical expectation for random server choice: {1 / (1 - args.lambd)}")
+
+    if args.csv is not None:
+        with open(args.csv, 'a', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow([args.lambd, args.mu, args.max_t, W])
+
+
+if __name__ == '__main__':
+    main()
