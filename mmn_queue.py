@@ -12,6 +12,11 @@ from discrete_event_sim import Simulation, Event
 # gen = weibull_generator(shape, mean)
 #
 # and then call gen() every time you need a random variable
+# L = λ * W
+# L: Length of the queue
+# λ: Arrival rate
+# W: Time spent in the system
+# load_balancing for the multi queues
 
 
 class MMN(Simulation):
