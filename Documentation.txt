@@ -154,15 +154,24 @@ dictionaries that map the job id to its arrival and completion times respectivel
 
 The lambd,mu,n are the overall arrival rate for the system, service rate, and number of servers in the system. The arrival_rate and
 completion_rate are computed by dividing the lambd and mu by the number of servers (n).
-The schedule_arrival method schedules the arrival of a job following an exponential distribution. The schedule_completion method schedules
-the time of the completion event. The queue_len property returns the length of the queue.
-The Arrival class is an event representing the arrival of a job in the system. When the process method is called, it records the arrival
-time of the job in the arrivals dictionary, assigns the incoming job to running if there is no running job, schedules its completion,
+
+The schedule_arrival method schedules the arrival of a job following an exponential distribution.
+The schedule_completion method schedules the time of the completion event.
+The queue_len property returns the length of the queue.
+
+The Arrival class is an event representing the arrival of a job in the system.
+When the process method is called, it records the arrival time of the job in the
+arrivals dictionary, assigns the incoming job to running if there is no running job,
+schedules its completion,
 otherwise it puts the job into the queue and schedules the arrival of the next job.
 
-The Completion class is an event representing the completion of a job. When the process method is called, it records the completion time
-of the running job in the completions dictionary, schedules the completion of the next job from the queue if the queue is not empty,
+The Completion class is an event representing the completion of a job. When the
+process method is called, it records the completion time
+of the running job in the completions dictionary, schedules the completion of the
+next job from the queue if the queue is not empty,
 otherwise it sets the running job to None.
 
-In the main function, the simulation is created with the values of lambd, mu, n, max-t passed as command-line arguments. The simulation is
-then run and the results are stored in a CSV file if the --csv option is provided.
+In the main function, the simulation is created with the values of
+lambd, mu, n, max-t passed as command-line arguments. The simulation is
+then run and the results are stored in a CSV file if the --csv option
+is provided.
