@@ -48,7 +48,7 @@ class MMN(Simulation):
 
     @property
     def queue_len(self):
-        return (self.running is None) + len(self.queue)
+        return (self.running is not None) + len(self.queue)
 
 
 class Arrival(Event):

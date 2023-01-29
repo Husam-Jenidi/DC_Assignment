@@ -36,18 +36,18 @@ class Simulation:
         You can call super().__init__() there to call the code here.
         """
         self.t = 0  # simulated time
-        self.event_queue = EventQueue()  # set up self.events as an empty queue
+        self.events = EventQueue()  # set up self.events as an empty queue
 
     def schedule(self, delay, event):
         """Add an event to the event queue after the required delay."""
         event.priority = self.t + delay
-        self.event_queue.push(event, event.priority)  # add event to the queue at time self.t + delay
+        self.events.push(event, event.priority)  # add event to the queue at time self.t + delay
 
     def run(self, max_t=float('inf')):
         """Run the simulation. If max_t is specified, stop it at that time. If max_t is not specified, it defaults to infinity
         which means it will run until the event queue is empty """
-        while not self.event_queue.is_empty():  # as long as the event queue is not empty
-            event = self.event_queue.pop()
+        while not self.events.is_empty():  # as long as the event queue is not empty
+            event = self.events.pop()
             if self.t > max_t:
                 break
             self.t = event.priority
