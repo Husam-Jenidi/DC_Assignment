@@ -19,9 +19,9 @@ from discrete_event_sim import Simulation, Event
 class Condition(Enum):
     """The condition of simulated individuals."""
 
-    SUSCEPTIBLE = 0
-    INFECTED = 1
-    RECOVERED = 2
+    SUSCEPTIBLE = 0  # might get infected
+    INFECTED = 1    # is infected
+    RECOVERED = 2   # is recovered
 
 
 class SIR(Simulation):
@@ -69,7 +69,7 @@ class Contact(Event):
         self.source = source
         self.destination = destination
 
-    def process(self, sim):
+    def process(self, sim):  # there is another process method in the Event class(method overriding)
         """If the patient is still infectious and the contact is susceptible, the latter will be infected."""
 
         sim.log_info(f"{self.source} contacts {self.destination}")
