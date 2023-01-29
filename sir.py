@@ -2,7 +2,12 @@
 
 import argparse
 import collections
-import enum
+# import enum
+from enum import Enum
+# Enum is a set of symbolic names (members) bound to unique values
+# can be iterated over to return its canonical (i.e. non-alias) members in definition order
+# uses call syntax to return members by value
+# uses index syntax to return members by name
 import logging
 import random
 
@@ -11,7 +16,7 @@ from matplotlib import pyplot as plt
 from discrete_event_sim import Simulation, Event
 
 
-class Condition(enum.Enum):
+class Condition(Enum):
     """The condition of simulated individuals."""
 
     SUSCEPTIBLE = 0
