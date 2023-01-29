@@ -44,10 +44,10 @@ class Simulation:
         self.events.push(event, event.priority)  # add event to the queue at time self.t + delay
 
     def run(self, max_t=float('inf')):
-        """Run the simulation. If max_t is specified, stop it at that time. If max_t is not specified, it defaults to infinity
-        which means it will run until the event queue is empty """
+        """Run the simulation. If max_t is specified, stop it at that time. If max_t is not specified,
+         it defaults to infinity which means it will run until the event queue is empty """
         while not self.events.is_empty():  # as long as the event queue is not empty
-            event = self.events.pop()
+            event = self.events.pop()   # pull the event from the queue
             if self.t > max_t:
                 break
             self.t = event.priority

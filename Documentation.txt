@@ -80,6 +80,15 @@ The log message is printed by the log_info function in the Simulation class, whi
 logging.info function. The logging.info function is part of the logging module, which you configured at the beginning of the
 script with `logging.basicConfig(level=logging.
 
+SIR file explanation
+
+
+
+
+
+
+
+
 
         MMN_queue
 the explanation of the first class MMN(simulation)
