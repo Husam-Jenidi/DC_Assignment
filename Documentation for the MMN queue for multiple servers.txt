@@ -39,6 +39,7 @@ in parallel.
 The logic for assigning jobs to free servers and maintaining the queue of waiting jobs
 is implemented differently in this class compared to a single-server queue.
 
+////////////////////
 Class Completion(Event)
 
 The Completion class is a subclass of the Event class. It represents the event of a
