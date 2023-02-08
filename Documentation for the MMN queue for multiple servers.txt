@@ -1,0 +1,59 @@
+The MMN class is a simulation class that models a multi-server queueing system. It is a subclass of the Simulation class. The multi-server queueing system has n servers and is used to process arriving jobs.
+
+The __init__ method initializes the simulation. It sets up several instance variables:
+
+"running" is a list that stores the ids of the running jobs for each server.
+"queue" is a FIFO queue that stores the waiting jobs.
+"arrivals" is a dictionary that maps job ids to their arrival times.
+"completions" is a dictionary that maps job ids to their completion times.
+"lambd" is the arrival rate of the jobs.
+"n" is the number of servers in the system.
+"mu" is the service rate of the servers.
+"arrival_rate" is the average rate at which jobs arrive, calculated as lambd / n.
+"completion_rate" is the average rate at which jobs are completed, calculated as mu / n.
+The "schedule_arrival" method schedules the next arrival event. The time until the next arrival is calculated using the expovariate function with the arrival rate as the argument. The next arrival event is scheduled using the schedule method from the parent Simulation class.
+
+The "schedule_completion" method schedules the completion of a job. The time until completion is calculated using the expovariate function with the completion rate as the argument. The completion event is scheduled using the schedule method from the parent Simulation class.
+
+The "queue_len" property returns the length of the queue, which is the number of waiting jobs plus the number of running jobs.
+
+In contrast to a single server queue system, in a multiple server queue system, a job can be served immediately when it arrives if there is an available server, otherwise it will be enqueued. This can lead to a reduction in the waiting time of jobs in the queue and thus, an improvement in the performance of the system.
+
+
+Class Arrival (Event)
+
+The class Arrival represents an arrival event in a multi-server queue system
+(in this case, the MMN queue). It's a subclass of Event and contains a job id for
+the arriving job. The method process contains the processing logic for this event.
+When this event is processed, the time of arrival for this job is recorded in the
+sim.arrivals dictionary. If all servers in the system are free, the job is assigned
+to a random server (in this case, the first available server, which is found using
+the index method on the sim.running list), and its completion is scheduled. If all
+servers are busy, the job is added to the end of the queue (using the append method
+on the sim.queue deque).
+Finally, another arrival event is scheduled using the sim.schedule_arrival method,
+which takes the next job id as its argument.
+In comparison to a single-server queue, the main difference is that this class
+implements a multi-server queue system, where there are multiple servers serving jobs
+in parallel.
+The logic for assigning jobs to free servers and maintaining the queue of waiting jobs
+is implemented differently in this class compared to a single-server queue.
+
+Class Completion(Event)
+
+The Completion class is a subclass of the Event class. It represents the event of a
+job finishing its service on a server. The class has two instance variables: id and
+server. id is the identifier of the job that is completing its service, and server is
+the identifier of the server that the job has been serviced on.
+
+The process method of the Completion class is called when the event is processed by
+the simulation. The method first checks that the server on which the job was serviced
+has a running job, by asserting that the corresponding entry in the running list of
+the simulation is not None. Then, it updates the completion time of the job in the
+completions dictionary and frees the server by setting the corresponding entry in the
+running list to None.
+
+If the queue of the simulation is not empty, the method assigns the next job in the
+queue to the same server by removing the next job from the front of the queue and
+updating the corresponding entry in the running list. It also schedules the completion
+of the next job on the same server.

@@ -189,7 +189,7 @@ is provided.
 The explanation of M/M/N queue for multiple servers
 
 
-The first class MMN
+The first class MMN(simulation)
 
 The MMN class is a simulation class that models a multi-server queueing system. It is a subclass of the
 Simulation class. The multi-server queueing system has n servers and is used to process arriving jobs.
@@ -215,3 +215,4 @@ using the schedule method from the parent Simulation class.
 
 The queue_len property returns the length of the queue, which is the number of waiting jobs plus the
 number of running jobs.
+
