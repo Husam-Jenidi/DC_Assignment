@@ -1,5 +1,5 @@
 The MMN class is a simulation class that models a multi-server queueing system. It is a subclass of the Simulation class. The multi-server queueing system has n servers and is used to process arriving jobs.
-/////////////////////I hate this 
+/////////////////////
 The __init__ method initializes the simulation. It sets up several instance variables:
 
 "running" is a list that stores the ids of the running jobs for each server.
