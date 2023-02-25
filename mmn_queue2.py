@@ -32,7 +32,7 @@ class MMN(Simulation):
     def queue_len(self):
         return len([running for running in self.running if running is not None]) + len(self.queue)
 
-#class of the arrival 
+#class of the arrival
 class Arrival(Event):
 
     def __init__(self, job_id):
