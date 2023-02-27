@@ -4,7 +4,7 @@ import csv
 import collections
 from random import expovariate
 
-from discrete_event_sim import Simulation, Event
+from discrete_event_sim_V01 import Simulation, Event
 
 
 class MMN(Simulation):
