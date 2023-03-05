@@ -4,35 +4,44 @@ import csv
 import collections
 from random import expovariate
 
-from discrete_event_sim import Simulation, Event
+from discrete_event_sim_V01 import Simulation, Event
 
 
 class MMN(Simulation):
 
     def __init__(self, lambd, mu, n):
         super().__init__()
-        self.running = [None] * n  # list to store the ids of running jobs for each server
-        self.queue = collections.deque()  # FIFO queue of the system
-        self.arrivals = {}  # dictionary mapping job id to arrival time
-        self.completions = {}  # dictionary mapping job id to completion time
+        self.running = [None] * n           # list of length n  to store the ids of running jobs for each server and initialized as "None"
+        self.queue = collections.deque()     # FIFO this is a deque object stores the ids of jobs that are waiting in the queue to be served.
+        self.arrivals = {}  # dictionary maps job ids to their arrivals time
+        self.completions = {}  # dictionary maps job ids to their completion time
         self.lambd = lambd  # the arrival rate
-        self.n = n  # number of servers in the system
         self.mu = mu  # service rate of the servers
-        self.arrival_rate = lambd / n
-        self.completion_rate = mu / n
+        self.n = n  # number of servers in the system
+        self.arrival_rate = lambd / n  # arrival rate per server
+        self.completion_rate = mu / n  # completion rate per server
         self.schedule(expovariate(lambd), Arrival(0))
+        # this schedules the first job arrival event with an arrival time of expovariate(lambd) and job id of (0) by calling
+        # the schedule method of the Simulation class.
 
     def schedule_arrival(self, job_id):
         self.schedule(expovariate(self.arrival_rate), Arrival(job_id))
+        # This schedules a new job arrival event with an arrival time of expovariate(self.arrival_rate) and the specified job id.
 
     def schedule_completion(self, job_id, server):
         self.schedule(expovariate(self.completion_rate), Completion(job_id, server))
+        # This schedules a job completion event for the specified job id and server with a completion time of expovariate(self.completion_rate).
 
     @property
     def queue_len(self):
-        return len([running for running in self.running if running is not None]) + len(self.queue)
+        _Total_running = [element for element in self.running if element is not None]
+        return len(_Total_running) + len(self.queue)
 
-#class of the arrival
+        # This is used to create a read-only attribute queue_len which returns the total number of jobs in the system, including running jobs and jobs in the queue.
+
+
+# class of the arrival
+
 class Arrival(Event):
 
     def __init__(self, job_id):
